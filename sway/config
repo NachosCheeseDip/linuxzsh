@@ -211,14 +211,32 @@ input "type:keyboard" {
 	xkb_layout us,th
 	xkb_options grp:alt_shift_toggle
 }
+
+#personal Shortcut
+#for_window [class="termfloat"] floating enable
+#bindsym $mod+Shift+Return exec $term --class="termfloat"
+bindsym $mod+c exec pcmanfm
+bindsym $mod+Shift+d exec firefox
+
+
+
+
+
+
+
 #This set the border and gaps
 #and Xwayland
 default_border pixel 1
 default_floating_border pixel 1 
-gaps inner 5
-gaps outer 5
-xwayland disabled
+#gaps inner 5
+#gaps outer 5
+xwayland enabled
 #This set key for pulseaudio volume
 bindsym $mod+minus exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym $mod+equal exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym $mod+plus exec pactl set-sink-mute @DEFAULT_SINK@ toggle 
+
+#set the border color
+#class			border		background	text	indicator	child_border			
+client.focused 		#c5c8c6 	#c5c8c6 	#1d1f21 #2e9ef4		#c5c8c6
+client.unfocused 	#1d1f21		#1d1f21		#c5c8c6	#292d2e		#1d1f21
