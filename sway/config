@@ -213,8 +213,8 @@ input "type:keyboard" {
 }
 
 #personal Shortcut
-#for_window [class="termfloat"] floating enable
-#bindsym $mod+Shift+Return exec $term --class="termfloat"
+for_window [app_id="termfloat"] floating toggle
+bindsym $mod+Shift+Return exec $term --class="termfloat"
 bindsym $mod+c exec pcmanfm
 bindsym $mod+Shift+d exec firefox
 
@@ -228,6 +228,7 @@ bindsym $mod+Shift+d exec firefox
 #and Xwayland
 default_border pixel 1
 default_floating_border pixel 1 
+smart_borders on
 #gaps inner 5
 #gaps outer 5
 xwayland enabled
