@@ -102,6 +102,7 @@ window#waybar.chromium {
 #clock {
     background-color: #c5c8c6;
     color: #1d1f21;
+    margin-right: 0px;
 }
 
 #battery {

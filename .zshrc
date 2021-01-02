@@ -6,7 +6,8 @@ unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/non/.zshrc'
+zstyle ':completion:*' menu select
+zmodload zsh/complist
 
 autoload -Uz compinit
 compinit
@@ -14,7 +15,7 @@ compinit
 alias ls='ls --color'
 alias fetch='neofetch'
 autoload -Uz colors && colors
-PROMPT='%B%F{white}[%n@%m %#]>%f%b '
+PROMPT='%B%F{green}[%n@%m %#]>%f%b '
 
 
 

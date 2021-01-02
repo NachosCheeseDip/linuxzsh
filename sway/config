@@ -18,7 +18,7 @@ set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu  wofi --show run | xargs swaymsg exec --
+set $menu  wofi --show drun | xargs swaymsg exec --
 
 ### Output configuration
 #
@@ -228,9 +228,9 @@ bindsym $mod+Shift+d exec firefox
 #and Xwayland
 default_border pixel 1
 default_floating_border pixel 1 
-smart_borders on
-#gaps inner 5
-#gaps outer 5
+#smart_borders on
+gaps inner 5
+gaps outer 5
 xwayland enabled
 #This set key for pulseaudio volume
 bindsym $mod+minus exec pactl set-sink-volume @DEFAULT_SINK@ -5%
