@@ -23,7 +23,7 @@ set $menu  wofi --show drun | xargs swaymsg exec --
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/Pictures/464464.jpg fill
+output * bg ~/Pictures/2.jpg fill
 #
 # Example configuration:
 #
@@ -218,8 +218,9 @@ bindsym $mod+Shift+Return exec $term --class="termfloat"
 bindsym $mod+c exec pcmanfm
 bindsym $mod+Shift+d exec firefox
 
-
-
+for_window [class="Sxiv"] floating toggle
+for_window [class="mpv"] floating toggle
+for_window [app_id="cheese"] floating toggle
 
 
 
@@ -229,13 +230,13 @@ bindsym $mod+Shift+d exec firefox
 default_border pixel 1
 default_floating_border pixel 1 
 #smart_borders on
-gaps inner 5
+gaps inner 10
 gaps outer 5
 xwayland enabled
 #This set key for pulseaudio volume
-bindsym $mod+minus exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym $mod+equal exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym $mod+plus exec pactl set-sink-mute @DEFAULT_SINK@ toggle 
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle 
 
 #set the border color
 #class			border		background	text	indicator	child_border			
