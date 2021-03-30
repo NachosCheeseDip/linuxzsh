@@ -13,18 +13,18 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 alias ls='ls --color'
-alias fetch='neofetch'
+alias f='neofetch'
 alias please='sudo'
 
 
 
 
 autoload -Uz colors && colors
-PROMPT='%B%F{green}[%n@%m %#]>%f%b '
-
+PROMPT='%B%F{yellow}%c%f %F{cyan}>%f%b '
+RPROMPT='%B%U%F{white}%d%f%u%b'
 
 #This will load syntax-highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 #This set the default text editor
 export EDITOR=/usr/bin/vim
