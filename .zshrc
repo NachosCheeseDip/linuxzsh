@@ -14,8 +14,9 @@ compinit
 # End of lines added by compinstall
 alias ls='ls --color'
 alias f='neofetch'
-alias please='sudo'
-
+alias x='startx'
+alias v='vim'
+bindkey -v
 
 
 
