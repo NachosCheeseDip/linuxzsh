@@ -17,7 +17,7 @@ index f2b0f14..0ffc02d 100644
  		char path[PATH_MAX], state[12];
 diff --git a/config.h b/config.h
 new file mode 100644
-index 0000000..4ffe071
+index 0000000..a1c2f19
 --- /dev/null
 +++ b/config.h
 @@ -0,0 +1,74 @@
@@ -89,9 +89,9 @@ index 0000000..4ffe071
 +static const struct arg args[] = {
 +	/* function format          argument */
 +	{ keymap, " %s |",          NULL },
-+	{ run_command, " Vol: %s |","amixer sget Master | awk -F[][] 'END{print $2}'"},
++	{ run_command, " Vol: %s |","amixer sget Master | awk -F\"[][]\" 'END{print ($6 == \"off\" ? \"-*-\" : $2)}'"},
 +	{ battery_perc, " Batt: %s","BAT0"},
 +	{ battery_state, " %s |", "BAT0"},
 +	{ wifi_perc, " Wiren't: %s |", "wlp2s0"}, 
-+	{ datetime, "%s",           "%F (%a) %T" },
++	{ datetime, " %s",           "%F (%a) %T" },
 +};
