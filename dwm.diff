@@ -1,9 +1,9 @@
 diff --git a/config.h b/config.h
 new file mode 100644
-index 0000000..2b150f8
+index 0000000..6418a0c
 --- /dev/null
 +++ b/config.h
-@@ -0,0 +1,126 @@
+@@ -0,0 +1,150 @@
 +/* See LICENSE file for copyright and license details. */
 +
 +/* appearance */
@@ -59,7 +59,29 @@ index 0000000..2b150f8
 +
 +/* helper for spawning shell commands in the pre dwm-5.0 fashion */
 +#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-+
++/* This is my function for controlling brightness*/
++static void incbrightness(const Arg *arg);
++static void decbrightness(const Arg *arg);
++void incbrightness(const Arg *arg){
++	int bright;
++	FILE *fp;
++	fp = fopen("/sys/class/backlight/amdgpu_bl0/brightness","r+");
++	fscanf(fp,"%d",&bright);
++	if(bright < 240){
++		fprintf(fp,"%d",bright + 10);
++	}
++	fclose(fp);
++}
++void decbrightness(const Arg *arg){
++	int brightdown;
++	FILE *fd;
++	fd = fopen("/sys/class/backlight/amdgpu_bl0/brightness","r+");
++	fscanf(fd,"%d",&brightdown);
++	if(brightdown > 10 ){
++		fprintf(fd,"%d",brightdown - 10);
++	}
++	fclose(fd);	
++}
 +/* commands */
 +static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 +static const char *dmenucmd[] = { "dmenu_run", "-p","Exec:","-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
@@ -80,6 +102,8 @@ index 0000000..2b150f8
 +	{ MODKEY,                       XK_equal,  spawn,          SHCMD("amixer sset Master 5%+")},
 +	{ MODKEY,                       XK_minus,  spawn,          SHCMD("amixer sset Master 5%-")},
 +	{ MODKEY,                       XK_c,      spawn,          SHCMD("killall picom || picom")},
++	{ 0,                            0x1008ff02,incbrightness,{0} },
++	{ 0,                            0x1008ff03,decbrightness,{0} },
 +	{ MODKEY,                       XK_b,      togglebar,      {0} },
 +	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 +	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -123,7 +147,7 @@ index 0000000..2b150f8
 +	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 +	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 +	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-+	{ ClkClientWin,         MODKEY|ShiftMask,         Button1,        resizemouse,    {0} },
++	{ ClkClientWin,         MODKEY|ShiftMask,Button1,        resizemouse,    {0} },
 +	{ ClkTagBar,            0,              Button1,        view,           {0} },
 +	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 +	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
