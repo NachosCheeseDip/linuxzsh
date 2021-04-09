@@ -1,13 +1,9 @@
-#!/bin/bash
-nitrogen --restore & 
-setxkbmap -option grp:alt_shift_toggle -layout us,th &
-battery(){
-	cat /sys/class/power_supply/BAT0/capacity
-}
-while true; do
-	xsetroot -name "  $(battery)% $(date +" %Y/%m/%d  %H:%M:%S")"
-	sleep 1s
-done &
+#!/bin/sh
+setxkbmap -option grp:lalt_lshift_toggle,caps:escape -layout us,th &
+xinput set-prop 'MSFT0001:00 06CB:CE2D Touchpad' 'libinput Tapping Enabled' 1 &
+xinput set-prop 'MSFT0001:00 06CB:CE2D Touchpad' 'libinput Natural Scrolling Enabled' 1 &
+hsetroot -solid "#282828" &
+exec picom &
+exec dunst &
+exec slstatus &
 exec dwm
-
-
