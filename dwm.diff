@@ -1,6 +1,6 @@
 diff --git a/config.h b/config.h
 new file mode 100644
-index 0000000..de6d3df
+index 0000000..ab2b6b4
 --- /dev/null
 +++ b/config.h
 @@ -0,0 +1,144 @@
@@ -94,8 +94,8 @@ index 0000000..de6d3df
 +	{ MODKEY,                       XK_c,      spawn,          SHCMD("killall picom || picom")},
 +	{ 0,                            0x1008ff17,spawn,          SHCMD("mpc next")},
 +	{ 0,                            0x1008ff16,spawn,          SHCMD("mpc prev")},
-+       { 0,                            0x1008ff15,spawn,          SHCMD("mpc stop")},
-+       { 0,                            0x1008ff14,spawn,          SHCMD("mpc toggle")},	
++	{ 0,                            0x1008ff15,spawn,          SHCMD("mpc stop")},
++	{ 0,                            0x1008ff14,spawn,          SHCMD("mpc toggle")},	
 +	{ 0,                            0x1008ff02,setbrightness,  {.i = +10} },
 +	{ 0,                            0x1008ff03,setbrightness,  {.i = -10} },
 +	{ MODKEY,                       XK_b,      togglebar,      {0} },
