@@ -1,0 +1,202 @@
+#
+# Default twm configuration file; needs to be kept small to conserve string
+# space in systems whose compilers don't handle medium-sized strings.  
+# Sites should tailor this file, providing any extra title buttons, menus, etc.
+# that may be appropriate for their environment.  For example, if most of the
+# users were accustomed to uwm, the defaults could be set up not to decorate
+# any windows and to use meta-keys.
+#
+
+NoGrabServer
+RestartPreviousState
+DecorateTransients
+TitleFont 		"-adobe-helvetica-medium-r-normal-*-12-*-*-*-*-*-*"
+ResizeFont 		"-adobe-helvetica-medium-r-normal-*-12-*-*-*-*-*-*"
+MenuFont 		"-adobe-helvetica-medium-r-normal-*-12-*-*-*-*-*-*"
+IconFont 		"-adobe-helvetica-medium-r-normal-*-12-*-*-*-*-*-*"
+IconManagerFont "-adobe-helvetica-medium-r-normal-*-12-*-*-*-*-*-*"
+NoDefaults
+RandomPlacement
+
+ShowIconManager
+IconifyByUnmapping
+NoTitle { 
+"TWM Icon Manager"
+"xclock"
+}
+
+
+IconManagerGeometry "150x100+0+0"
+#If in your .twmrc you assign a maximise button on the twm window title along with a f.fullzoom function call, 
+#then whilst the window will maximise using a single click it takes two clicks to restore. 
+#The reason looks to be due to f.fullzoom waits for the next click after
+# maximisation to focus the next window (documented feature, not a bug).
+# A workaround to get to the more usual single click to maximise and 
+#another single click to restore back down again is to instead create a function, 
+#something like ...
+#From https://www.linuxquestions.org/questions/%2Absd-17/twm-maximise-maximize-4175618143/
+
+Function "fullscreen" { f.fullzoom f.focus f.unfocus}
+
+TitleButtonBorderWidth 0
+NoTitleHighlight
+IconDirectory "~"
+LeftTitleButton ".twmicon.xbm" = f.resize
+RightTitleButton ".twmicon.xbm" = f.iconify
+RightTitleButton ".twmicon.xbm" = f.function "fullscreen"
+RightTitleButton ".twmicon.xbm" = f.delete
+
+BorderWidth 0
+IconBorderWidth 0
+MenuBorderWidth 0
+NoMenuShadows 
+
+Color
+{
+    BorderColor "#f8f8f2"
+    DefaultBackground "#bd93f9"
+    DefaultForeground "#f8f8f2"
+    TitleBackground "#bd93f9"
+    TitleForeground "#f8f8f2"
+    MenuBackground "#282a36"
+    MenuForeground "#f8f8f2"
+    MenuBorderColor "#bd93f9"
+    MenuTitleBackground "#bd93f9"
+    MenuTitleForeground "#f8f8f2"
+    IconBackground "#bd93f9"
+    IconForeground "#f8f8f2"
+    IconBorderColor "#bd93f9"
+    IconManagerBackground "#bd93f9"
+    IconManagerForeground "#f8f8f2"
+}
+
+#
+# Define some useful functions for motion-based actions.
+#
+MoveDelta 1
+Function "move-or-lower" { f.move f.deltastop f.lower }
+Function "move-or-raise" { f.move f.deltastop f.raise }
+Function "move-or-iconify" { f.move f.deltastop f.iconify }
+Function "move-or-fullzoom" { f.move f.deltastop f.fullzoom }
+#
+# Set some useful bindings.  Sort of uwm-ish, sort of simple-button-ish
+#
+Button1 = : root : f.menu "defops"
+
+Button1 = m4 : window|icon : f.function "move-or-lower"
+Button2 = m4 : window|icon : f.iconify
+Button3 = m4 : window|icon : f.function "move-or-raise"
+
+"F10" = m1 : window : f.fullzoom
+"F4" = m1 : window : f.delete
+"equal" = m4 : all : f.exec "pactl set-sink-volume @DEFAULT_SINK@ +5% &"
+"minus" = m4 : all : f.exec "pactl set-sink-volume @DEFAULT_SINK@ -5% &"
+"equal" = m4|s : all : f.exec "pactl set-sink-mute @DEFAULT_SINK@ toggle &"
+"f" = m4 : all : f.raise
+"r" = m4 : all : f.exec "rofi -show run &"
+"b" = m4 : all : f.lower
+"s" = m4 : w : f.fullzoom
+"c" = m4|s : w : f.delete
+"r" = m4|s : all : f.restart
+"q" = m4|s : all : f.quit
+"Return" = m4|s : all : f.exec "urxvt &"
+"XF86MonBrightnessDown" = : all : f.exec "xbacklight -dec 5 &"
+"XF86MonBrightnessUp" = : all : f.exec "xbacklight -inc 5 &"
+
+Button1 = : title : f.function "move-or-fullzoom"
+
+Button1 = : icon : f.function "move-or-iconify"
+Button2 = : icon : f.iconify
+
+Button1 = : iconmgr : f.iconify
+Button2 = : iconmgr : f.iconify
+
+Button2 = : title : f.raise
+
+#
+# And a menus with the usual things
+#
+menu "defops"
+{
+""	f.title
+"Move"		f.move
+"Resize"	f.resize
+"Iconify"	f.iconify
+"Maximize"   f.function "fullscreen"
+"Tile Left"  f.leftzoom
+"Tile Right" f.rightzoom
+"Delete"	f.delete
+""		f.nop
+"Raise"		f.raise
+"Lower"		f.lower
+"Focus"		f.focus
+"Unfocus"	f.unfocus
+""		f.nop
+"Terminal"		f.exec "urxvt &"
+"Firefox"       f.exec "firefox &"
+"Geany"         f.exec "geany &"
+"Applications"   f.menu "Applications"
+""		f.nop
+"Power"         f.menu "power"
+""              f.nop
+"Kill"		f.destroy
+"Lock Screen" f.exec "slock &"
+"Restart"	f.restart
+"Logout"		f.quit
+}
+
+menu "power" {
+"Power Options" f.title
+"Reboot"	f.exec "systemctl reboot &"
+"Suspend"       f.exec "systemctl suspend &"
+"Shutdown"      f.exec "systemctl poweroff &"
+}
+
+menu "Applications" {
+"Applications" f.title
+"Terminal" f.exec "urxvt &"
+"Office" f.menu "office"
+"Graphics" f.menu "graphics"
+"Editor" f.menu "editor"
+"Media" f.menu "media"
+"Browser" f.exec "firefox &"
+"Torrenting" f.exec "transmission-gtk &"
+"File Manager" f.exec "pcmanfm &"
+"Look And Feel" f.exec "lxappearance &"
+"System Monitor" f.exec "urxvt -e htop &"
+}
+
+
+menu "office" {
+"Office" f.title
+"LibreOffice Writer" f.exec "libreoffice --writer &"
+"LibreOffice Calc" f.exec "libreoffice --calc &"
+"LibreOffice Draw" f.exec "libreoffice --draw &"
+"LibreOffice Impress" f.exec "libreoffice --impress &"
+"LibreOffice Math" f.exec "libreoffice --math &"
+"LibreOffice StartCenter" f.exec "libreoffice --startcenter &"
+"LibreOffice Base" f.exec "libreoffice --base &"
+"Atril Document Viewer" f.exec "atril &" 
+}
+
+menu "editor" {
+"Editor" f.title
+"Emacs" f.exec "emacs &"
+"Geany" f.exec "geany &"
+"Leafpad" f.exec "leafpad &"
+"NeoVim"  f.exec "urxvt -e nvim &"
+}
+
+menu "media" {
+"Media" f.title
+"MPV" f.exec "mpv --player-operation-mode=pseudo-gui &"
+"VLC" f.exec "vlc &"
+"DeadBeef" f.exec "deadbeef &"
+"PavuControl" f.exec "pavucontrol &"
+}
+
+menu "graphics" {
+"Graphics" f.title
+"Gimp" f.exec "gimp-2.10 &"
+"Krita" f.exec "krita &"
+}
