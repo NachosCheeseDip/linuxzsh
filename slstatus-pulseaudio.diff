@@ -17,7 +17,7 @@ index f2b0f14..0ffc02d 100644
  		char path[PATH_MAX], state[12];
 diff --git a/config.h b/config.h
 new file mode 100644
-index 0000000..5b16e2b
+index 0000000..bd64eab
 --- /dev/null
 +++ b/config.h
 @@ -0,0 +1,74 @@
@@ -89,9 +89,9 @@ index 0000000..5b16e2b
 +static const struct arg args[] = {
 +	/* function format          argument */
 +	{ keymap, " %s |",          NULL },
-+	{ run_command, " Vol: %s |","pactl list sinks | awk \'NR==10{print $5}\'"},
++	{ run_command, " Vol: %s |","pactl list sinks | awk \'NR==9{var=$2}NR==10{print (var == \"no\")?$5:\"Muted\"}\'"},
 +	{ battery_perc, " Batt: %s","BAT0"},
 +	{ battery_state, " %s |", "BAT0"},
-+	{ wifi_perc, " Wiren't: %s |", "wlp2s0"}, 
++	{ wifi_perc, " Wiren't: %s |", "wlp2s0"},
 +	{ datetime, " %s",           "%F (%a) %T" },
 +};
