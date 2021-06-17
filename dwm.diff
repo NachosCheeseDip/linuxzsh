@@ -1,5 +1,5 @@
 diff --git a/config.def.h b/config.def.h
-index 1c0b587..c5b7373 100644
+index 1c0b587..17684f2 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -5,8 +5,8 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -44,11 +44,14 @@ index 1c0b587..c5b7373 100644
 -
 +static const char *dmenucmd[] = { "dmenu_run", "-p","Exec:","-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 +static const char *termcmd[]  = { "urxvt", NULL };
-+static const char *browser[] = { "firefox",NULL };
-+static const char *mixer[] = { "pavucontrol",NULL };
-+static const char *pcmanfm[] = { "pcmanfm" , NULL };
-+static const char *locker[] = {"slock",NULL};
-+static const char *htop[] = { "urxvt","-e","htop",NULL};
++static const char *browser[]  = { "firefox",NULL };
++static const char *mixer[]    = { "urxvt","-e","alsamixer",NULL };
++static const char *pcmanfm[]  = { "pcmanfm" , NULL };
++static const char *locker[]   = {"slock",NULL};
++static const char *htop[]     = { "urxvt","-e","htop",NULL};
++static const char *volinc[]   = { "amixer","-D","default","sset","Master","5%+",NULL};
++static const char *voldec[]   = { "amixer","-D","default","sset","Master","5%-",NULL};
++static const char *voltog[]   = { "amixer","-D","default","sset","Master","toggle",NULL};
  static Key keys[] = {
  	/* modifier                     key        function        argument */
  	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -58,12 +61,9 @@ index 1c0b587..c5b7373 100644
 +	{ MODKEY|ShiftMask,             XK_o,      spawn,          {.v = pcmanfm } },
 +	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = locker } },
 +	{ MODKEY|ShiftMask,             XK_y,      spawn,          {.v = htop } },
-+	{ MODKEY,                       XK_equal,  spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%")},
-+	{ MODKEY,                       XK_minus,  spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%")},
-+	{ MODKEY|ShiftMask,             XK_equal,  spawn,          SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle")},
-+	{ 0,                            0x1008ff02,spawn,          SHCMD("xbacklight -inc 5")},
-+	{ 0,                            0x1008ff03,spawn,          SHCMD("xbacklight -dec 5")},
-+	{ MODKEY|ShiftMask,             XK_x,      spawn,          SHCMD("case $(printf \"None\nSuspend\nHibernate\nReboot\nShutdown\n\" | dmenu -i -p \"Power:\") in \"Suspend\") slock & systemctl suspend;; \"Hibernate\")slock & systemctl hibernate;; \"Reboot\")systemctl reboot;; \"Shutdown\") systemctl poweroff;; *)exit;; esac")},
++	{ MODKEY,                       XK_equal,  spawn,          {.v = volinc } },
++	{ MODKEY,                       XK_minus,  spawn,          {.v = voldec } },
++	{ MODKEY|ShiftMask,             XK_equal,  spawn,          {.v = voltog } },
  	{ MODKEY,                       XK_b,      togglebar,      {0} },
  	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
  	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -71,7 +71,7 @@ index 1c0b587..c5b7373 100644
  	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
  	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
  	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-+	{ ClkClientWin,         MODKEY|ShiftMask,Button1,        resizemouse,    {0} },
++	{ ClkClientWin,         MODKEY|ShiftMask,Button1,       resizemouse,    {0} },
  	{ ClkTagBar,            0,              Button1,        view,           {0} },
  	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
  	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
